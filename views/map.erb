@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <title>comitia 121</title>
-    <link type="text/css" rel="stylesheet" media="all" href="css/map.css">
-    <link type="text/css" rel="stylesheet" media="all" href="css/spaces.css">
-    <link type="text/css" rel="stylesheet" media="all" href="css/spaces_wall.css">
+    <link type="text/css" rel="stylesheet" media="all" href="<%= url('/css/map.css') %>">
+    <link type="text/css" rel="stylesheet" media="all" href="<%= url('/css/spaces.css') %>">
+    <link type="text/css" rel="stylesheet" media="all" href="<%= url('/css/spaces_wall.css') %>">
   </head>
   <body>
     <ul id="spaces">
-    <% spaces.each_pair do |space, name| %>
+    <% @spaces.each_pair do |space, name| %>
       <li id="<%= space %>"><%= name %></li>
     <% end %>
     </ul>

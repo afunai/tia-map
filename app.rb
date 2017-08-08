@@ -30,6 +30,6 @@ get '/auth/:name/callback' do
 end
 
 get '/erb_test' do
-  spaces = {'A01a' => 'john doe'}
+  @spaces = {'A-01a' => 'john doe'}
   erb :map
 end
