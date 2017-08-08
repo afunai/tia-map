@@ -20,5 +20,11 @@ get '/auth/:name/callback' do
     config.access_token_secret = env['omniauth.auth'][:credentials][:secret]
   end
 
-  client.friends().inspect
+  friends = []
+  client.friend_ids.each_slice(100) do |slice|
+    friends << client.users(slice).collect do |f|
+      f.name
+    end
+  end
+  friends.inspect
 end
