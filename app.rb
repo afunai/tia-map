@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'omniauth-twitter'
 require 'twitter'
-require 'json'
+require 'erb'
 
 use Rack::Session::Cookie
 use OmniAuth::Builder do
@@ -21,10 +21,15 @@ get '/auth/:name/callback' do
   end
 
   friends = []
-  client.friend_ids.each_slice(100) do |slice|
+  client.friend_ids.each_slice(200) do |slice|
     friends << client.users(slice).collect do |f|
       f.name
     end
   end
   friends.inspect
+end
+
+get '/erb_test' do
+  spaces = {'A01a' => 'john doe'}
+  erb :map
 end
