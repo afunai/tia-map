@@ -28,8 +28,8 @@ get '/' do
 
   @spaces = {}
   friends.each do |f|
-    if f !~ /(C\d\d|日目)/ and f =~ /(.+?)([\[\(@＠%↑\/【（☻■●・。1$]|comitia|tia|コミティア|ティア).*([A-Zあ-ん])(\d\d[ab]?)/i then
-      @spaces["#{$3.upcase}-#{$4}"] = '★' + $1
+    if f !~ /(C\d\d|日目)/i and f =~ /(.+?)([\[\(@＠%↑\/【（☻■●・。1$]|comitia|tia|コミティア|ティア).*([A-ZＡ-Ｚあ-ん])(\d\d[abａｂ]?)/i then
+      @spaces["#{$3.upcase}-#{$4}"] = '★' + $1.tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
     end
   end
   erb :map
