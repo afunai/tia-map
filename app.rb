@@ -3,21 +3,20 @@ require 'omniauth-twitter'
 require 'twitter'
 require 'erb'
 
-use Rack::Session::Cookie
 use OmniAuth::Builder do
   provider :twitter, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']
 end
 
-get '/' do
-  '<a href="/auth/twitter">sign in with Twitter</a>'
-end
+enable :sessions
 
-get '/auth/:name/callback' do
+get '/' do
+  redirect '/auth/twitter' unless session[:credentials]
+
   client = Twitter::REST::Client.new do |config|
     config.consumer_key        = ENV["CONSUMER_KEY"]
     config.consumer_secret     = ENV["CONSUMER_SECRET"]
-    config.access_token        = env['omniauth.auth'][:credentials][:token]
-    config.access_token_secret = env['omniauth.auth'][:credentials][:secret]
+    config.access_token        = session[:credentials]['token']
+    config.access_token_secret = session[:credentials]['secret']
   end
 
   friends = []
@@ -36,7 +35,7 @@ get '/auth/:name/callback' do
   erb :map
 end
 
-get '/erb_test' do
-  @spaces = {'A-01a' => 'john doe'}
-  erb :map
+get '/auth/:name/callback' do
+  session[:credentials] = env['omniauth.auth'][:credentials].to_h
+  redirect '/'
 end
