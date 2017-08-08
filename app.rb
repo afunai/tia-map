@@ -13,5 +13,12 @@ get '/' do
 end
 
 get '/auth/:name/callback' do
-  request.env.to_json
+  client = Twitter::REST::Client.new do |config|
+    config.consumer_key        = ENV["CONSUMER_KEY"]
+    config.consumer_secret     = ENV["CONSUMER_SECRET"]
+    config.access_token        = env['omniauth.auth'][:credentials][:token]
+    config.access_token_secret = env['omniauth.auth'][:credentials][:secret]
+  end
+
+  client.friends().inspect
 end
