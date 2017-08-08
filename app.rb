@@ -22,8 +22,8 @@ get '/auth/:name/callback' do
 
   friends = []
   client.friend_ids.each_slice(200) do |slice|
-    friends << client.users(slice).collect do |f|
-      f.name
+    client.users(slice).each do |f|
+      friends << f.name
     end
   end
   friends.inspect
