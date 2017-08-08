@@ -2,6 +2,7 @@ require 'sinatra'
 require 'omniauth-twitter'
 require 'json'
 
+use Rack::Session::Cookie
 use OmniAuth::Builder do
   provider :twitter, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']
 end
