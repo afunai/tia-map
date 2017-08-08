@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'omniauth-twitter'
+require 'twitter'
 require 'json'
 
 use Rack::Session::Cookie
