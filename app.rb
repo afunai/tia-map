@@ -26,7 +26,14 @@ get '/auth/:name/callback' do
       friends << f.name
     end
   end
-  friends.inspect
+
+  @spaces = {}
+  friends.each do |f|
+    if f !~ /(C\d\d|日目)/ and f =~ /(.+?)([\[\(@＠%↑\/【（☻■●・。1$]|comitia|tia|コミティア|ティア).*([A-Zあ-ん])(\d\d[ab]?)/i then
+      @spaces["#{$3.upcase}-#{$4}"] = '★' + $1
+    end
+  end
+  erb :map
 end
 
 get '/erb_test' do
